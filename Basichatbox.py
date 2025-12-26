@@ -1,7 +1,7 @@
 import random
 import time
 
-# --- THE BRAIN ---
+
 brain = {
     "jokes": [
         "Why do programmers prefer dark mode? Because light attracts bugs!",
@@ -31,7 +31,7 @@ brain = {
     }
 }
 
-# --- MEMORY ---
+
 context = {"last_topic": None, "used_jokes": []}
 
 def get_joke():
@@ -46,7 +46,7 @@ def get_joke():
 def chatbot_logic(user_input):
     text = user_input.lower().strip()
     
-    # 1. Check for new emotions
+   
     for emotion in brain["topics"]:
         if emotion in text:
             context["last_topic"] = emotion
@@ -54,12 +54,11 @@ def chatbot_logic(user_input):
             question = random.choice(brain["topics"][emotion]["follow_ups"])
             return f"{reply} {question}"
 
-    # 2. Check for manual joke request
+
     if any(w in text for w in ["joke", "laugh", "funny"]):
         return f"Here's a fresh one: {get_joke()}. Did you like that one?"
 
-    # 3. CONTEXTUAL CONTINUATION (The 'Human' part)
-    # If the user says something short like "yes" or "not really", the bot stays on topic
+    
     if context["last_topic"]:
         topic = context["last_topic"]
         if any(w in text for w in ["yes", "yeah", "sure", "maybe", "ok"]):
@@ -67,7 +66,7 @@ def chatbot_logic(user_input):
         elif any(w in text for word in ["no", "not", "nope"]):
             return f"I understand. If not that, then what is making you feel {topic}?"
 
-    # 4. RANDOM CONVERSATION STARTERS (If the chat stalls)
+
     return random.choice([
         "I'm all ears. What else is on your mind?",
         "By the way, I was thinking—do you usually have days like this?",
@@ -85,7 +84,7 @@ def start_chat():
             print("Bot: It was great talking to you. Come back soon!")
             break
         
-        # Simulate 'Typing...'
+       
         print("Bot is typing", end="")
         for _ in range(3):
             time.sleep(0.3)
